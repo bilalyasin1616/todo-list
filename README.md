@@ -31,11 +31,36 @@ A simple Todo List application.
    pnpm dev
    ```
 
+## E2E Tests
+
+To run end-to-end (E2E) tests, you must start the application in a separate terminal first:
+
+1. Start the application:
+
+```
+pnpm start:dev
+```
+
+or (for production build):
+
+```
+pnpm start
+```
+
+2. In a new terminal, run the E2E tests:
+
+```
+pnpm test:e2e
+```
+
+E2E tests require the app to be running before they are executed.
+
 ## Scripts
 
-- `pnpm dev` — Start in development mode
+- `pnpm start:dev` — Start in development mode
 - `pnpm build` — Build the application
 - `pnpm start` — Start the application
+- `pnpm test:e2e` - Run end to end tests
 
 ## Project Structure
 
