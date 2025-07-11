@@ -55,6 +55,14 @@ pnpm test:e2e
 
 E2E tests require the app to be running before they are executed.
 
+## Test via Postman
+
+Import the Postman collection and environment files from `__postman__` into a Postman Workspace and test endpoints
+
+- Set user_id to simulate endpoints for a specific user
+- Set list_id to target a specific TODO List
+- Set item_id to target a specific Item inside a TODO List
+
 ## Scripts
 
 - `pnpm start:dev` — Start in development mode
