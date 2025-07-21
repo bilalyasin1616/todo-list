@@ -28,7 +28,7 @@ A simple Todo List application.
 
 3. **Run the application:**
    ```sh
-   pnpm dev
+   pnpm start:dev
    ```
 
 ## E2E Tests
