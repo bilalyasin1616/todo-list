@@ -1,6 +1,10 @@
 import request from "supertest";
+import { loadConfig } from "../src/config";
 
-const PORT = 3000;
+//TODO - Move to jest setup file
+loadConfig();
+
+const PORT = process.env.APP_PORT || 3000;
 const BASE_URL = `http://localhost:${PORT}/api`;
 const HEADERS = { "x-user-id": "1" };
 

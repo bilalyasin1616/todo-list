@@ -35,7 +35,18 @@ A simple Todo List application.
 
 To run end-to-end (E2E) tests, you must start the application in a separate terminal first:
 
-1. Start the application:
+1. Environment Variables
+
+   - Copy the contents of your `.env` file to a new file named `.env.e2e` in the project root.
+   - Example:
+
+   ```sh
+   cp .env .env.e2e
+   ```
+
+   - Edit `.env.e2e` as needed for your e2e tests.
+
+2. Start the application:
 
 ```
 pnpm start:dev
@@ -47,7 +58,7 @@ or (for production build):
 pnpm start
 ```
 
-2. In a new terminal, run the E2E tests:
+3. In a new terminal, run the E2E tests:
 
 ```
 pnpm test:e2e

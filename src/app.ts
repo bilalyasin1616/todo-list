@@ -1,8 +1,5 @@
 import express from "express";
 import router from "./routes";
-import { loadConfig } from "./config";
-
-loadConfig();
 
 const app = express();
 app.use(express.json());

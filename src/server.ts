@@ -1,4 +1,7 @@
 import app from "./app";
+import { loadConfig } from "./config";
+
+loadConfig();
 
 const APP_PORT = process.env.APP_PORT || 3000;
 
