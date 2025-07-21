@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   addItemToTodoList,
-  createTodoList,
+  createAndStoreTodoList,
   deleteItemFromTodoList,
   getTodoListById,
   getTodoListsByUser,
@@ -34,7 +34,7 @@ router.post("/", (req, res) => {
   if (typeof name !== "string") {
     return res.status(400).json({ error: "Name must be a string" });
   }
-  const list = createTodoList(req.userId, name);
+  const list = createAndStoreTodoList(req.userId, name);
   res.status(201).json(list);
 });
 

@@ -1,5 +1,11 @@
-import { createItem, TodoItem, updateItem } from "../domain/todo-item";
-import { TodoList } from "../domain/todo-list";
+import { TodoItem } from "../domain/todo-item";
+import {
+  TodoList,
+  createTodoList,
+  addItem,
+  updateItemInList,
+  deleteItem,
+} from "../domain/todo-list";
 
 let todoLists: TodoList[] = [];
 let listId = 1;
@@ -8,45 +14,36 @@ let itemId = 1;
 export const getTodoListsByUser = (userId: number): TodoList[] =>
   todoLists.filter((list) => list.userId === userId);
 
-export const createTodoList = (userId: number, name: string): TodoList => {
-  const newList: TodoList = { id: listId++, userId, name, items: [] };
+export const createAndStoreTodoList = (
+  userId: number,
+  name: string
+): TodoList => {
+  const newList = createTodoList(listId++, userId, name);
   todoLists = [...todoLists, newList];
   return newList;
 };
 
 export const getTodoListById = (
   userId: number,
-  listId: number
+  id: number
 ): TodoList | undefined =>
-  todoLists.find((l) => l.userId === userId && l.id === listId);
+  todoLists.find((list) => list.userId === userId && list.id === id);
 
 export const addItemToTodoList = (list: TodoList, title: string): TodoItem => {
-  const item = createItem(itemId++, title);
-  const updatedList = {
-    ...list,
-    items: [...list.items, item],
-  };
-  todoLists = todoLists.map((list) =>
-    list.id === list.id ? updatedList : list
-  );
-  return item;
+  const [updatedList, newItem] = addItem(list, itemId++, title);
+  todoLists = todoLists.map((l) => (l.id === list.id ? updatedList : l));
+  return newItem;
 };
 
 export const updateItemInTodoList = (
   list: TodoList,
   itemId: number,
-  data: Partial<Omit<TodoItem, "id">>
+  patch: Partial<Omit<TodoItem, "id">>
 ): TodoItem | null => {
-  const item = list.items.find((item) => item.id === itemId);
-  if (!item) return null;
-  const updatedItem = updateItem(item, data);
-  const updatedItems = list.items.map((item) =>
-    item.id === itemId ? updatedItem : item
-  );
-  const updatedList = { ...list, items: updatedItems };
-  todoLists = todoLists.map((list) =>
-    list.id === list.id ? updatedList : list
-  );
+  const result = updateItemInList(list, itemId, patch);
+  if (!result) return null;
+  const [updatedList, updatedItem] = result;
+  todoLists = todoLists.map((l) => (l.id === list.id ? updatedList : l));
   return updatedItem;
 };
 
@@ -54,13 +51,8 @@ export const deleteItemFromTodoList = (
   list: TodoList,
   itemId: number
 ): boolean => {
-  if (!list.items.some((item) => item.id === itemId)) return false;
-  const updatedList = {
-    ...list,
-    items: list.items.filter((item) => item.id !== itemId),
-  };
-  todoLists = todoLists.map((list) =>
-    list.id === list.id ? updatedList : list
-  );
+  const [updatedList, didExist] = deleteItem(list, itemId);
+  if (!didExist) return false;
+  todoLists = todoLists.map((l) => (l.id === list.id ? updatedList : l));
   return true;
 };
